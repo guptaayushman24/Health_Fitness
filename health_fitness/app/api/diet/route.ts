@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 
@@ -6,10 +5,10 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export  async function POST (req: NextRequest, res: NextResponse) {
+export async function POST (req: NextRequest, res: NextResponse) {
   
   try {
-    // const { weight, height, age } = req.json();
+
     const body = await req.json();
     if (!body.weight || !body.height || !body.age) {
       return Response.json({
