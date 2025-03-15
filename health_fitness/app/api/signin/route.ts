@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import User_Schema from "../../Schema/user";
 import connectToDatabase from "../../db/index";
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest, res: NextResponse) : Promise<NextResponse>{
   try {
     await connectToDatabase();
     const body = await req.json();
@@ -14,7 +14,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       })
     }
     if (body.password === password.Password) {
-      return Response.json({
+      return NextResponse.json({
         'msg': 'User Found'
       })
     }
