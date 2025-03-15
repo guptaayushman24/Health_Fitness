@@ -44,7 +44,7 @@ export default function () {
 
                 <button
                     className={`p-2 rounded-md ${selectedCategory === "AI and BMI bases meal" ? "bg-purple-700" : ""}`}
-                   onClick={()=>router.push('/bmimeal')}
+                   onClick={()=>router.push('/bmi')}
                 >
                    AI and BMI bases meal
                 </button>
