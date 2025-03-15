@@ -2,19 +2,18 @@ import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY || "",
 });
 
-export async function POST (req: NextRequest) {
-  
+export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-
     const body = await req.json();
+
     if (!body.weight || !body.height || !body.age) {
-      return Response.json({
-        error: "Missing required fields" 
-      })
-      
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 }
+      );
     }
 
     // Calculate BMI
@@ -40,14 +39,19 @@ export async function POST (req: NextRequest) {
       max_tokens: 300,
     });
 
-    Response.json({
-      bmi: bmi.toFixed(2), dietPlan: response.choices[0].message.content 
-    })
+    return NextResponse.json(
+      {
+        bmi: bmi.toFixed(2),
+        dietPlan: response.choices[0]?.message?.content || "No response from AI",
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error generating diet plan:", error);
-    return Response.json({
-      error: "Internal Server Error"
-    })
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
 
