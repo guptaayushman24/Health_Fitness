@@ -9,7 +9,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       Email: body.email
     })
     if (password == null) {
-      return Response.json({
+      return NextResponse.json({
         'msg': "Please check the email address"
       })
     }
@@ -18,12 +18,12 @@ export async function POST(req: NextRequest, res: NextResponse) {
         'msg': 'User Found'
       })
     }
-    return Response.json({
+    return NextResponse.json({
       'msg': 'Please check your password'
     })
   }
   catch (err) {
-    return Response.json({
+    return NextResponse.json({
       'Response': err
     })
   }
